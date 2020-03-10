@@ -3,10 +3,9 @@ from item import Item, Weapon
 from friends import Friend
 from enemy import Enemy
 from backpack import Backpack
-from termcolor import colored
 import sys,time,random
 import winsound
-
+from clint.textui import colored
 
 kolegium = Place('Kolegium', 'In the middle of your room, your roommate built a castle of empty \
 energetic cans. Over your bed on the wall hang posters of Metallica. Your room extremely needs cleaning.\n')
@@ -42,12 +41,12 @@ bully3 = Enemy('Bully with knuckles', 75, 35)
 whore = Friend('whore')
 boss = Friend('Police captain')
 
-roommate.set_dialogue(colored('\n[roommate]: What are you looking at?\n[you]: ...\n[roommate]: Get lost!', 'blue'))
-mate.set_dialogue(colored("[Matthew]: What an awful miserable day! Won't you miss days like this? \n\
-[you]: ...\n[Matthew]: U wanna smoke with me for the last time?",'blue'))
-whore.set_dialogue(colored('[whore]: WhaT a prEtty yoUng fAcE. Do YoU have somEthinG to wEt my tHroaT?\[you]: ...', 'blue'))
-boss.set_dialogue(colored('Near half-hundred policemen point their guns on you. You have no way to run.\n\
-[police captain]: Do you think that this is just a game!? Than your game is over!', 'red'))
+roommate.set_dialogue(colored.blue('\n[roommate]: What are you looking at?\n[you]: ...\n[roommate]: Get lost!'))
+mate.set_dialogue(colored.blue("[Matthew]: What an awful miserable day! Won't you miss days like this? \n\
+[you]: ...\n[Matthew]: U wanna smoke with me for the last time?"))
+whore.set_dialogue(colored.blue('[whore]: WhaT a prEtty yoUng fAcE. Do YoU have somEthinG to wEt my tHroaT?\[you]: ...'))
+boss.set_dialogue(colored.red('Near half-hundred policemen point their guns on you. You have no way to run.\n\
+[police captain]: Do you think that this is just a game!? Than your game is over!'))
 bully1.set_description('A tall, thin man with a cigarret in his mouth and a bottle of beer in hand.\
 \nHP:{}\nDamage:{}'.format(bully1.health, bully1.attack))
 bully2.set_description('About 6 feet tall... lots of jailhouse tats.\nHP:{}\nDamage:{}'.format(
@@ -98,17 +97,17 @@ def slow(text, speed):
     for i in text:
         sys.stdout.write(i)
         sys.stdout.flush()
-        if speed == 1: time.sleep(0.08) #0.08
-        else: time.sleep(0.05) #0.05
+        if speed == 1: time.sleep(0.06) 
+        else: time.sleep(0.03) 
 
     print('')
 
 def ending():
     current_room = station
     current_room.get_details()
-    slow(colored(boss.talk(), 'red'), 1)
+    slow(colored.red(boss.talk()), 1)
     if whore in backpack.contents:
-        slow(colored(boss.text, 'red'), 1)
+        slow(colored.red(boss.text), 1)
         print("\n\
  \t\t\t ______ _   _ _____  \n\
  \t\t\t|  ____| \ | |  __ \ \n\
@@ -126,7 +125,7 @@ ___________|||______________________________|______________/    \n\
            |||                                        /-------- \n\
 -----------'''---------------------------------------'")
     else:
-        slow(colored('You had heard half-hundred gunshots. Everything went dark.', 'red'), 1)
+        slow(colored.red('You had heard half-hundred gunshots. Everything went dark.'), 1)
         sys.exit()
     time.sleep(5)
     sys.exit()
@@ -134,14 +133,18 @@ ___________|||______________________________|______________/    \n\
 backpack = Backpack()
 health = 150
 current_room = kolegium
-winsound.PlaySound('retro.wav', winsound.SND_ASYNC)
-print(colored("\n \
+try:
+    winsound.PlaySound('retro.wav', winsound.SND_ASYNC)
+except:
+    import os
+    os.system('aplay retro.wav&') #Linux
+print(colored.red("\n \
 \t\t\t  _____      _          _   __  __ _         _                     \n \
 \t\t\t |  __ \    | |        | | |  \/  (_)       (_)                     \n \
 \t\t\t | |__) |___| |__   ___| | | \  / |_ ___ ___ _  ___  _ __  ___       \n \
 \t\t\t |  _  // _ \ '_ \ / _ \ | | |\/| | / __/ __| |/ _ \| '_ \/ __|       \n \
 \t\t\t | | \ \  __/ |_) |  __/ | | |  | | \__ \__ \ | (_) | | | \__ \        \n \
-\t\t\t |_|  \_\___|_.__/ \___|_| |_|  |_|_|___/___/_|\___/|_| |_|___/   \n\n\n\n ", 'red'))
+\t\t\t |_|  \_\___|_.__/ \___|_| |_|  |_|_|___/___/_|\___/|_| |_|___/   \n\n\n\n "))
 print("Don't forget your headphones. Play only in fullscreen.\n")
 
 
@@ -154,15 +157,15 @@ while health > 0:
     if len(persons) != 0:
         for person in persons:
             if person.__class__.__name__ == 'Friend':
-                slow('[talk]: {}'.format(colored(person.name, 'blue')), 2)
+                slow('[talk]: {}'.format(colored.blue(person.name)), 2)
             else:
-                slow('[fight]: {}'.format(colored(person.name, 'red')), 2)
+                slow('[fight]: {}'.format(colored.red(person.name)), 2)
     if len(items) != 0:
         for item in items:
             if item.__class__.__name__ == 'Weapon':
-                slow('[take]: {}'.format(colored(item.name, 'cyan')), 2)
+                slow('[take]: {}'.format(colored.cyan(item.name)), 2)
             else:
-                slow('[take]: {}'.format(colored(item.name, 'yellow')), 2)
+                slow('[take]: {}'.format(colored.yellow(item.name)), 2)
 
     command = input("> ")
 
@@ -173,12 +176,12 @@ while health > 0:
             else:
                 slow(persons[0].talk(), 1)
                 if persons[0].required in backpack.contents:
-                    slow(colored(persons[0].text, 'blue'), 1) 
+                    slow(colored.blue(persons[0].text), 1) 
                     gift = persons[0].gift
                     if gift.__class__.__name__ == 'Item':
-                        slow('You got {}'.format(colored(gift.name, 'yellow')), 1)
+                        slow('You got {}'.format(colored.yellow(gift.name)), 1)
                     else:
-                        slow('The {} follows you now.'.format(colored(gift.name, 'magenta')), 1)
+                        slow('The {} follows you now.'.format(colored.magenta(gift.name)), 1)
                     backpack.set_contents(gift)
                     del current_room.persons[0]
                 else:
@@ -193,15 +196,15 @@ while health > 0:
                 elif ammo not in backpack.contents:
                     slow('You must be Chuck Norris to shot without ammo. Find ammo!', 1)
                     break
-                slow('{}\n{}'.format(colored(person.name, 'red'), person.description), 1)
+                slow('{}\n{}'.format(colored.red(person.name), person.description), 1)
                 while person.health > 0:
                     slow('Choose your weapon: ',1)
                     bag = []
                     if weapon1 in backpack.contents:
-                        slow('{}'.format(colored(weapon1.name, 'cyan')), 1)
+                        slow('{}'.format(colored.cyan(weapon1.name)), 1)
                         bag.append(weapon1.name)
                     if weapon2 in backpack.contents:
-                        slow('{}'.format(colored(weapon2.name, 'cyan')), 1)
+                        slow('{}'.format(colored.cyan(weapon2.name)), 1)
                         bag.append(weapon2.name)
                     command = 0
                     while command not in bag: 
@@ -212,14 +215,14 @@ while health > 0:
                             continue
                     if command == weapon1.name and command in bag:
                         person.damage(weapon1.damage)
-                        slow('{} You hit him with {} damage'.format(colored('Bang-Bang-Bang!', 'red'), colored(weapon1.damage, 'red')), 1)
+                        slow('{} You hit him with {} damage'.format(colored.red('Bang-Bang-Bang!'), colored.red(weapon1.damage)), 1)
                     elif command == weapon2.name and command in bag: 
                         person.damage(weapon2.damage)
-                        slow('{} You hit him with {} damage'.format(colored('BANG!', 'red'), colored(weapon2.damage, 'red')), 1)
-                    slow('Your enemy`s health is {}'.format(colored(person.health, 'red')), 1)
+                        slow('{} You hit him with {} damage'.format(colored.red('BANG!', 'red'), colored.red(weapon2.damage)), 1)
+                    slow('Your enemy`s health is {}'.format(colored.red(person.health)), 1)
                     if person.health > 0:
                         health -= person.attack
-                        slow('{} Your enemy hit you! Your HP is {}'.format(colored('WHAT A PITY!', 'red'),colored(health,'red')), 1)
+                        slow('{} Your enemy hit you! Your HP is {}'.format(colored.red('WHAT A PITY!', 'red'),colored.red(health)), 1)
                         if health <= 0:
                             break
                     else:
@@ -237,9 +240,9 @@ while health > 0:
             count = 1
             for item in items: 
                 if item.__class__.__name__ == 'Weapon':
-                    slow('{}. {} ({})'.format(count, colored(item.name, 'cyan'), item.description), 1)
+                    slow('{}. {} ({})'.format(count, colored.cyan(item.name), item.description), 1)
                 else:
-                    slow('{}. {} ({})'.format(count, colored(item.name, 'yellow'), item.description), 1)
+                    slow('{}. {} ({})'.format(count, colored.yellow(item.name), item.description), 1)
                 count += 1
             command = 0
             while command not in range(1, len(items)+1): 
@@ -250,9 +253,9 @@ while health > 0:
                     continue
             if command-1 in range(len(items)):
                 if items[command-1].__class__.__name__ == 'Weapon':
-                    slow('You took {}'.format(colored(items[command-1].name,'cyan')), 1)
+                    slow('You took {}'.format(colored.cyan(items[command-1].name)), 1)
                 else:
-                    slow('You took {}'.format(colored(items[command-1].name,'yellow')), 1)
+                    slow('You took {}'.format(colored.yellow(items[command-1].name)), 1)
                 backpack.set_contents(items[command-1])
                 del current_room.item[command-1]
 
@@ -263,7 +266,7 @@ while health > 0:
             current_room = locations[0]
         else:
             for place in locations:
-                slow('{}. {}'.format(count, (colored(place.name, 'green'))), 1)
+                slow('{}. {}'.format(count, (colored.green(place.name))), 1)
                 count += 1
             command = 0
             while command not in range(1, len(locations)+1): 
@@ -278,16 +281,16 @@ while health > 0:
                 else:
                     ending()
             else:
-                slow(colored('You wanna leave this bully alive!? Are you kidding!?', 'red'), 1)
+                slow(colored.red('You wanna leave this bully alive!? Are you kidding!?'), 1)
     
     elif command == 'backpack':
         for item in backpack.contents:
             if item.__class__.__name__ == 'Weapon':
-                slow('{} ({})'.format(colored(item.name, 'cyan'), item.description), 1)
+                slow('{} ({})'.format(colored.cyan(item.name), item.description), 1)
             elif item.__class__.__name__ == 'Item':
-                slow('{} ({})'.format(colored(item.name, 'yellow'), item.description), 1)
+                slow('{} ({})'.format(colored.yellow(item.name), item.description), 1)
             else:
-                slow('{}'.format(colored(item.name, 'magenta')), 1)
+                slow('{}'.format(colored.magenta(item.name)), 1)
                 
     elif command == 'exit':
         sys.exit()
