@@ -1,3 +1,3 @@
 # RealLviv
-file:///C:/Users/Deer/Videos/Captures/game.mp4
-file:///C:/Users/Deer/Documents/2sem_python/music/retro.wav
+[Video]()
+[If you can't download music use this link](https://drive.google.com/file/d/1ccqUjhNBbESUZVs7IRFdmuHQXIv9Q3iA/view?usp=sharing)
