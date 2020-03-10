@@ -1,9 +1,10 @@
 # RebelMission
+Game for my university lab. Do not take it too seriously, just enjoy it!
 ## Required module
 For beautiful text you need clint
-####
+```python
 pip install clint
-####
+```
 ## Gameplay
 ![Знімок екрана (481)](https://user-images.githubusercontent.com/54356826/76356775-30acfa00-631f-11ea-8b22-c71fca1b6590.png)
 
