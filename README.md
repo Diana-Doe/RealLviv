@@ -3,6 +3,7 @@
 For beautiful text you need clint
 ####
 pip install clint
+####
 ## Gameplay
 ![Знімок екрана (481)](https://user-images.githubusercontent.com/54356826/76356775-30acfa00-631f-11ea-8b22-c71fca1b6590.png)
 
@@ -17,4 +18,6 @@ As git doesn`t like large files I uploaded music on my google drive.
 
 ## About game
 You don't need to understand the main character. Just go and shoot people!
+#
+No references. All random coincidences
 
