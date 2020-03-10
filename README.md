@@ -5,6 +5,7 @@ For beautiful text you need clint
 ```python
 pip install clint
 ```
+By the way, command line don't like it
 ## Gameplay
 ![Знімок екрана (481)](https://user-images.githubusercontent.com/54356826/76356775-30acfa00-631f-11ea-8b22-c71fca1b6590.png)
 
