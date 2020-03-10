@@ -20,5 +20,5 @@ As git doesn`t like large files I uploaded music on my google drive.
 ## About game
 You don't need to understand the main character. Just go and shoot people!
 #
-No references. All random coincidences
+No references. Any similarities is 100% coincidental.
 
